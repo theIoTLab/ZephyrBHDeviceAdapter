@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Zephyr BH Device Adapter</string>
+    <string name="title_activity_main">Zephyr BioHarness Device Adapter</string>
+    <string name="welcome_message">Zephyr BH Device Adapter correctly activated! You need to do this only once. From now on you can just start the Protocol Adapter.</string>
+
+</resources>
