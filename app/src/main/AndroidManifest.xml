@@ -26,7 +26,7 @@
         </receiver>
 
         <activity
-            android:name=".ConfigActivity"
+            android:name="eu.fistar.sdcs.pa.da.zephyrbh.ConfigActivity"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

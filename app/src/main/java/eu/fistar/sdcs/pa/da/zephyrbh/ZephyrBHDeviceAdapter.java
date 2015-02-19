@@ -26,6 +26,7 @@ import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -141,7 +142,7 @@ public class ZephyrBHDeviceAdapter extends Service {
          * structure with key-value pairs containing all possible configuration parameters and
          * their values, together with the device ID. This should be done before starting the Device
          * Adapter, otherwise standard configuration will be used. Depending on capabilities, this
-         * could also be invoked when the DA is already runing.
+         * could also be invoked when the DA is already running.
          *
          * @param config
          *		The configuration for the device in the form of a key/value set (String/String)
@@ -217,18 +218,6 @@ public class ZephyrBHDeviceAdapter extends Service {
         @Override
         public Capabilities getDACapabilities() throws RemoteException {
             return DiscoveryResponder.CAPABILITIES;
-        }
-
-        /**
-         * Return the name of the Activity (or the Intent Filter name) that should be launched to
-         * perform the graphical configuration.
-         *
-         * @return The name of the activity that will be called by Protocol Adapter when it's
-         * necessary
-         */
-        @Override
-        public String getDAConfigActivityName() throws RemoteException {
-            throw new UnsupportedOperationException("Method not supported by " + DiscoveryResponder.CapabilitiesConstants.CAP_FRIENDLY_NAME + "!");
         }
 
         /**
@@ -612,7 +601,7 @@ public class ZephyrBHDeviceAdapter extends Service {
 
         // Register the newly connected device with the Protocol Adapter
         try {
-            paApi.registerDevice(new DeviceDescription(device));
+            paApi.registerDevice(new DeviceDescription(device), DiscoveryResponder.CapabilitiesConstants.DA_ID);
         } catch (RemoteException e) {
             Log.e(LOGTAG_ZEPHYRBH_SERVICE, "Failed registering new device:\n" + device.toString());
         }
