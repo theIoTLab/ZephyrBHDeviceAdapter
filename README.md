@@ -1,34 +1,13 @@
 #Zephyr BioHarness Device Adapter
 
 FI-STAR Phase: Beta  
-Document version: 0.9 (draft)  
-Date: 15/12/2014  
+Document version: 1.0 (draft)
+Date: 05/03/2015
 
-##The Protocol Adapter architecture
-The Protocol Adapter is an M2M data collection software that runs on Android (mainly mobile) devices acting as a gateway for sensor devices. The Protocol Adapter was developed as an open source component of the FI-STAR Frontend Platform, in the frame of the FI-STAR project.
-The Protocol Adapter software architecture has three high-level components:
+##What is the Zephyr BioHarness Device Adapter
+The Zephyr BioHarness Device Adapter is a Device Adapter, a component of the Protocol Adapter (more about the Protocol Adapter [here](https://github.com/theIoTLab/ProtocolAdapterManager/blob/master/Protocol%20Adapter%20Guide.md)). It handles the BioHarness 3 devices manufactured by Zephyr. The BioHarness 3 is a compact sensor-packed device with focus on monitoring the activity and vital signs of a person. This Device Adapter uses the library BioHarnessBT.jar provided by Zephyr inside their SDK "BioHarness Bluetooth Developer Kit". You can have more info about the SDK and buy it visiting [their website](http://zephyranywhere.com/zephyr-labs/development-tools/).
 
-* the Protocol Adapter Manager Service,
-* the Device Adapter and
-* the Protocol Adapter Library
-
-###The Protocol Adapter Manager Service
-It includes a Protocol Adapter Manager (PAManager) service and several Device Adapters (DA) on the same Android device. All of them are implemented in separate Android applications and communicate using the AIDL interfaces and common objects included in a separate library. The Protocol Adapter automatically discovers DAs present on the system at startup time and adds them to the pool of available DAs. This makes the architecture modular and expandable.
-The PAManager has three main roles:
-
-* to provide a single entry point for data-collection applications
-* to provide device management interfaces for the application
-* to manage the lifecycle of the DAs.
-
-###The Device Adapter
-A Device Adapter is a software component that manages low-level connections to sensor devices of a given kind and collects data from them. The collected data resulting from the measurements carried out by the sensor devices are provided to the Protocol Adapter with a well-known data structure (i.e. Java object) called Observation.
-Generally, DAs provide communication and interoperability at channel and syntactic level. Some operational aspects are also managed by the DA with sensor devices.
-
-###The Protocol Adapter Library
-The Protocol Adapter library is a library that contains all the objects and facilities (parcelable objects, AIDL interfaces, etc.) needed to develop applications that make use of the Protocol Adapter. Once included in your project, you won’t need to worry about low level details, but instead you can focus on implementing your logic, taking for granted the underlying infrastructure and functionalities provided by the Protocol Adapter. Please, note that the library is not only for using in applications, but it is also used by us in the Protocol Adapter and in every Device Adapter. We released this library in the form of an AAR package.
-
-##Description of the Zephyr BioHarness Device Adapter
-The Zephyr BioHarness Device Adapter is a Device Adapter that handles the BioHarness 3 devices manufactured by Zephyr. The BioHarness 3 is a compact sensor-packed device with focus on monitoring the activity and vital signs of a person. This Device Adapter uses the library BioHarnessBT.jar provided by Zephyr inside their SDK "BioHarness Bluetooth Developer Kit". You can have more info about the SDK and buy it visiting [their website](http://zephyranywhere.com/zephyr-labs/development-tools/). **N.B.**: The Zephyr's library is **NOT** included in the project's sources, but it is **required** for it to compile and work correctly.
+**N.B.**: The Zephyr's library is **NOT** included in the project's sources, but it is **required** for it to compile and work correctly.
 
 ##Initial operations
 Before you can start using the Device Adapter, there are some initial operations that you are required to perform.
