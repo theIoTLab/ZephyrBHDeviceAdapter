@@ -22,8 +22,12 @@
 
 package eu.fistar.sdcs.pa.da.zephyrbh.utils;
 
+import android.util.Log;
+
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
+
+import eu.fistar.sdcs.pa.da.zephyrbh.ZephyrBHConstants;
 
 /**
  * This class offers a facility method to convert time from format used by BioHarness to Unix Epoch.
@@ -43,7 +47,7 @@ public class TimeConverter {
         seconds = (int) (TimeUnit.MILLISECONDS.toSeconds(millisOfDay) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisOfDay)));
         milliseconds = (int) millisOfDay % 1000;
 
-        epoch = new GregorianCalendar(year, (int) month, (int) day, hours, minutes, seconds).getTimeInMillis();
+        epoch = new GregorianCalendar(year, ((int) month) -1, (int) day, hours, minutes, seconds).getTimeInMillis();
         epoch += milliseconds;
 
         return epoch;
