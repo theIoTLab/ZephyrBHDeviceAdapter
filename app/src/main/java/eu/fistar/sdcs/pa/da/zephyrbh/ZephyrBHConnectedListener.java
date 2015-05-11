@@ -372,7 +372,7 @@ public class ZephyrBHConnectedListener extends ConnectListenerImpl {
 
         // Convert short values to String
         for (int i = 0; i < samples.length; i++) {
-            strSamples[i] = Integer.toString(samples[i]);
+            strSamples[i] = Short.toString((short) samples[i]);
         }
 
         // Create the Observation object
