@@ -234,6 +234,11 @@ public class ZephyrBHDeviceAdapter extends Service {
             IntentFilter filterDisconnectedDevice = new IntentFilter();
             filterDisconnectedDevice.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
             registerReceiver(broadcastDeviceDisconnection, filterDisconnectedDevice);
+
+            // Register the broadcast receiver to catch bluetooth toggle at runtime
+            IntentFilter filterBluetoothToggle = new IntentFilter();
+            filterBluetoothToggle.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+            registerReceiver(broadcastBluetoothToggle, filterBluetoothToggle);
         }
 
         /**
@@ -244,6 +249,7 @@ public class ZephyrBHDeviceAdapter extends Service {
             // Unregister the broadcast receivers
             unregisterReceiver(broadcastPairedDevices);
             unregisterReceiver(broadcastDeviceDisconnection);
+            unregisterReceiver(broadcastBluetoothToggle);
 
             // Close all connections
             for (String tmpDev : connectedDevices.keySet()) {
@@ -577,6 +583,27 @@ public class ZephyrBHDeviceAdapter extends Service {
                     } catch (RemoteException e) {
                         Log.e(LOGTAG_ZEPHYRBH_SERVICE, "Failed notify device disconnection:\n" + devAddr);
                     }
+                }
+            }
+        }
+    };
+
+    private BroadcastReceiver broadcastBluetoothToggle = new BroadcastReceiver() {
+
+        /**
+         * Handle the turning off and on of Bluetooth, updating the list of paired devices
+         *
+         * @param context The context provided by the OS
+         * @param intent The Intent received from the OS
+         */
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(intent.getAction())) {
+                if (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1) == BluetoothAdapter.STATE_OFF) {
+                    pairedDevices.clear();
+                } else if (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1) == BluetoothAdapter.STATE_ON) {
+                    btAdapt = BluetoothAdapter.getDefaultAdapter();
+                    populatePairedDevices();
                 }
             }
         }
